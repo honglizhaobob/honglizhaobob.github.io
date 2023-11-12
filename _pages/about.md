@@ -2,16 +2,15 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
-
+subtitle: <a href='https://cam.uchicago.edu/'>University of Chicago, CAAM</a>. 
 profile:
   align: right
-  image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  image: prof_photo.png
+  image_circular: true # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>Jones 307</p>
+    <p>5747 S Ellis Avenue, Chicago IL</p>
+    <p>Chicago, IL 60637</p>
 
 news: true  # includes a list of news items
 latest_posts: true  # includes a list of the newest posts
@@ -19,10 +18,10 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Testing fourth commit.
+Hello! I am Bob, a third-year graduate student in Computational and Applied Mathematics at University of Chicago. I am happily advised by [Prof. Mihai Anitescu](https://web.cels.anl.gov/~anitescu/), and also work with many outstanding mentors and peers both in and outside of UChicago. Previously, I graduated from UC Berkeley studying [Applied Math](https://math.berkeley.edu/), and [Data Science](https://data.berkeley.edu/). During undergraduate studies, I was very fortunate to have worked with [Prof. Daniel Tartakovsky](https://profiles.stanford.edu/daniel-tartakovsky) and [Prof. Lin Lin](https://math.berkeley.edu/~linlin/index.html). I also participated in [BeBOP](https://bebop.cs.berkeley.edu/), organized by [Prof. James Demmel](http://people.eecs.berkeley.edu/~demmel/).
 
-Final testing before adding changes.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
-
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+I am broadly interested in numerical problems and algorithm development for scientific computing, often involving physical models under randomness. I currently think about the following topics:
+- Estimating probabilities of rare events, such as cascading failures in an interconnected system
+- Overcoming the curse of dimensionality using low-complexity numerical methods
+- Explainable applications of generative machine learning on the above tasks.
