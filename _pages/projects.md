@@ -1,12 +1,12 @@
 ---
 layout: page
-title: projects
+title: Projects
 permalink: /projects/
-description: A growing collection of your cool projects.
+description: A list of technical projects that may or may not be research-related.
 nav: true
 nav_order: 2
-display_categories: [work, fun]
-horizontal: false
+display_categories: [Research Experiments, Technical Interests]
+horizontal: true
 ---
 
 <!-- pages/projects.md -->

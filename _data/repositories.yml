@@ -1,12 +1,7 @@
 github_users:
-  - torvalds
-  - alshedivat
+  - honglizhaobob
 
 github_repos:
-  - alshedivat/al-folio
-  - twbs/bootstrap
-  - jekyll/jekyll
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - jpswalsh/academicons
-  - mathjax/MathJax
+  - honglizhaobob/Winter21Autumn22Stat31120
+  - honglizhaobob/Sp21Math128B
+  - honglizhaobob/TensorizingFlow

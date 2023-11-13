@@ -1,61 +1,61 @@
 {
   "basics": {
-    "name": "Albert Einstein",
-    "label": "Scientist",
+    "name": "Hongli Zhao",
+    "label": "PhD Student",
     "image": "",
-    "email": "albert@einstein.de",
-    "phone": "(912) 123-4567",
-    "url": "https://alshedivat.github.io/al-folio/",
-    "summary": "A German-born theoretical physicist, widely ranked among the greatest and most influential scientists of all time",
+    "email": "honglizhaobob@uchicago.edu",
+    "phone": "(415) 518-0826",
+    "url": "https://honglizhaobob.github.io",
+    "summary": "A PhD student at University of Chicago in Computational and Applied Mathematics.",
     "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
-      "city": "San Francisco",
+      "address": "5747 S Ellis Avenue",
+      "postalCode": "IL 60637",
+      "city": "Chicago",
       "countryCode": "US",
-      "region": "California"
+      "region": "Illinois"
     },
     "profiles": [
       {
         "network": "Twitter",
-        "username": "AlbertEinstein",
-        "url": "https://twitter.com/AlbertEinstein"
+        "username": "HongliRobert",
+        "url": "https://twitter.com/HongliRobert"
       }
     ]
   },
   "work": [
     {
-      "name": "Institute for Advanced Study, Princeton University",
-      "position": "Professor of Theoretical Physics",
-      "url": "https://example.com",
-      "startDate": "1933-01-01",
-      "endDate": "1955-01-01",
-      "summary": "Teaching at Palmer Physical Laboratory (now 302 Frist Campus Center). While not a professor at Princeton, I associated with the physics professors and continued to give lectures on campus.",
+      "name": "Argonne National Laboratory",
+      "position": "Givens Associate",
+      "url": "",
+      "startDate": "2023-06-01",
+      "endDate": "2024-03-01",
+      "summary": "Research in scientific computing for power systems. ",
       "highlights": [
-        "Relativity"
+        "Rare events"
       ]
     }
   ],
   "volunteer": [],
   "education": [
     {
-      "institution": "University of Zurich, Zurich, Switzerland",
-      "url": "https://www.uzh.ch/",
-      "area": "Software Development",
-      "studyType": "PhD",
-      "startDate": "1905-01-01",
-      "endDate": "1905-01-01",
+      "institution": "University of California, Berkeley",
+      "url": "",
+      "area": "Applied Mathematics, Data Science",
+      "studyType": "Bachelor of Arts",
+      "startDate": "2018-08-15",
+      "endDate": "2021-05-31",
       "score": "",
       "courses": [
-        "Theory of Relativity"
+        "TBA"
       ]
     }
   ],
   "awards": [
     {
-      "title": "Nobel Prize in Physics",
-      "date": "1921-11-01",
-      "awarder": "Royal Swedish Academy of Sciences",
-      "summary": "The Nobel Prizes are five separate prizes that, according to Alfred Nobel's will of 1895, are awarded to 'those who, during the preceding year, have conferred the greatest benefit to humankind.'"
+      "title": "TBA",
+      "date": "",
+      "awarder": "",
+      "summary": ""
     }
   ],
   "certificates": [],
@@ -63,12 +63,16 @@
   "skills": [],
   "languages": [
     {
-      "language": "German",
+      "language": "English",
       "fluency": "Native speaker"
     },
     {
-      "language": "English",
+      "language": "Chinese (Madarin)",
       "fluency": "Fluent"
+    },
+    {
+      "language": "Japanese",
+      "fluency": "Basic/Conversational"
     }
   ],
   "interests": [],
