@@ -8,12 +8,19 @@
   abbr = {In Progress}
 }
 
-@article{stiff-closures,
-	author = {Hongli Zhao, and others},
-  title = {Data-driven Closures and Assimilation for Stiff Multiscale Random Dynamics},
-	year = {2024},
-  bibtex_show = {true},
-  abbr = {In Progress}
+@misc{stiff-closures,
+	  abstract = {
+	  We introduce a data-driven and physics-informed framework for propagating uncertainty in stiff, multiscale random ordinary differential equations (RODEs) driven by correlated (colored) noise. Unlike systems subjected to Gaussian white noise, a deterministic equation for the joint probability density function (PDF) of RODE state variables does not exist in closed form. Moreover, such an equation would require as many phase-space variables as there are states in the RODE system. To alleviate this curse of dimensionality, we instead derive exact, albeit unclosed, reduced-order PDF (RoPDF) equations for low-dimensional observables/quantities of interest. The unclosed terms take the form of state-dependent conditional expectations, which are directly estimated from data at sparse observation times. However, for systems exhibiting stiff, multiscale dynamics, data sparsity introduces regression discrepancies that compound during RoPDF evolution. This is overcome by introducing a kinetic-like defect term to the RoPDF equation, which is learned by assimilating in sparse, low-fidelity RoPDF estimates. Two assimilation methods are considered, namely nudging and deep neural networks, which are successfully tested against Monte Carlo simulations.
+	  },
+      title={Data-driven Closures \& Assimilation for Stiff Multiscale Random Dynamics}, 
+      author={Tyler E. Maltba and Hongli Zhao and D. Adrian Maldonado},
+      year={2023},
+      eprint={2312.10243},
+      archivePrefix={arXiv},
+      primaryClass={math.DS},
+      arxiv = "2312.10243",
+      bibtex_show = {true},
+      abbr = "Arxiv"
 }
 
 
@@ -40,6 +47,7 @@
 }
 
 @misc{zhao2023model,
+	abstract = {Discovery of mathematical descriptors of physical phenomena from observational and simulated data, as opposed to from the first principles, is a rapidly evolving research area. Two factors, time-dependence of the inputs and hidden translation invariance, are known to complicate this task. To ameliorate these challenges, we combine Lagrangian dynamic mode decomposition with a locally time-invariant approximation of the Koopman operator. The former component of our method yields the best linear estimator of the system's dynamics, while the latter deals with the system's nonlinearity and non-autonomous behavior. We provide theoretical estimators (bounds) of prediction accuracy and perturbation error to guide the selection of both rank truncation and temporal discretization. We demonstrate the performance of our approach on several non-autonomous problems, including two-dimensional Navier-Stokes equations.},
     title={Model discovery for nonautonomous translation-invariant problems}, 
     author={Hongli Zhao and Daniel M. Tartakovsky},
     year={2023},
