@@ -6,7 +6,7 @@
     "email": "honglizhaobob@uchicago.edu",
     "phone": "",
     "url": "https://honglizhaobob.github.io",
-    "summary": "A PhD student at University of Chicago in Computational and Applied Mathematics.",
+    "summary": "A PhD student in Computational and Applied Mathematics at University of Chicago.",
     "location": {
       "address": "5747 S Ellis Avenue",
       "postalCode": "IL 60637",
@@ -29,14 +29,24 @@
       "url": "",
       "startDate": "2023-06-01",
       "endDate": "2024-03-01",
-      "summary": "Research in scientific computing for power systems. ",
+      "summary": "Research in scientific computing and optimization for power systems. ",
       "highlights": [
-        "Rare events"
+        "Infinite-dimensional optimization",
+        "Rare events sampling", "Physics-informed neural networks (PINN)",
+        "Reduced-order methods for SDEs", "Stochastic homogenization"
       ]
     }
   ],
   "volunteer": [],
   "education": [
+    {
+      "institution": "The University of Chicago",
+      "url": "",
+      "area": "Computational and Applied Mathematics",
+      "studyType": "Doctoral Program",
+      "startDate": "2021-06-30",
+      "endDate": ""
+    },
     {
       "institution": "University of California, Berkeley",
       "url": "",
@@ -44,18 +54,27 @@
       "studyType": "Bachelor of Arts",
       "startDate": "2018-08-15",
       "endDate": "2021-05-31",
-      "score": "",
-      "courses": [
-        "TBA"
-      ]
+      "score": "4.00/4.00"
     }
   ],
   "awards": [
     {
-      "title": "TBA",
-      "date": "",
-      "awarder": "",
-      "summary": ""
+      "title": "McCormick Fellowship",
+      "date": "2021-09-27",
+      "awarder": "Physical Sciences Division, University of Chicago",
+      "summary": "A one-time award for highly-rated incoming Ph.D. students. "
+    }, 
+    {
+      "title": "International House Non-Resident Graduate Fellowship",
+      "date": "2021-2024",
+      "awarder": "International House, University of Chicago",
+      "summary": "Awarded for leadership abilities, involvement in community and university organizations, extracurricular interests in areas such as performing arts, athletics, and cultural activities, participation in community service, and contributions to increasing diversity."
+    },
+    {
+      "title": "Summer Undergraduate Research Fellowship (SURF)",
+      "date": "2020-05-31",
+      "awarder": "Office of Undergraduate Research and Scholarships, UC Berkeley",
+      "summary": "Summer research fellowship awarded for selected student research proposals from letters & science. "
     }
   ],
   "certificates": [],
