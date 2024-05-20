@@ -7,7 +7,7 @@ nav: true
 nav_order: 4
 ---
 
-* Note: For any solutions (or course material in general) you find on my teaching page, please [email me](mailto:honglizhaobob@uchicago.edu) or any referenced collaborator/lecturer before use. If you are a current student, please refer to your institution's policies on academic honesty. Any comments on improvements/errata are also greatly appreciated.
+* Note: For any solutions (or course material in general) you find on my teaching page, please [email me](mailto:honglizhaobob@uchicago.edu) or any referenced collaborator/lecturer before use. If you are a current student, please refer to our institution's policy on academic honesty. Any comments on improvements/errata are also greatly appreciated.
 
 <!-- 
     * TODO:
