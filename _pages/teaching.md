@@ -159,7 +159,7 @@ nav_order: 4
             TA
         </h6>
         <p class="card-text">
-            Undergraduate introduction to machine learning.
+            Taught weekly discussion sections, held office hours, answered questions on Ed, created teaching materials and homework, and proctored exams.
         </p>
   </div>
   <div class="position-relative">
@@ -182,7 +182,7 @@ nav_order: 4
 <div class="card mt-3 p-3">
     <div class="card-body">
         <h5 class="card-title">
-            <a href="https://classes.berkeley.edu/content/  2021-spring-math-128b-001-lec-001">
+            <a href="https://ds-modules.github.io/DATA198-SP21.github.io/sp21/">
                 DATA 198: Applied Data Science for Research and Discovery
             </a>
         </h5>
@@ -251,8 +251,16 @@ nav_order: 4
             Course Reader
         </h6>
         <p class="card-text">
-            I wrote solutions and (occassionally) held office hours. This is upper-division undergraduate real analysis.
+            I wrote solutions and held office hours. This is upper-division undergraduate real analysis.
         </p>
+        <ul>
+            <li>(Fall 2019) 
+                <a href="https://www.ocf.berkeley.edu/~asharma/">Prof. Arun Sharma</a>
+            </li>
+            <li>(Fall 2020) 
+                <a href="https://www.ilcharle.com/">Prof. Ian Charlesworth</a>
+            </li>
+        </ul>
   </div>
   <div class="position-relative">
      <a class="float-right">
@@ -278,7 +286,7 @@ nav_order: 4
             Course Tutor
         </h6>
         <p class="card-text">
-            Very large CS course. This is the first challenge for students in the major. My role was roughly the same as what I did in Summer 2020.
+            Official course tutoring for weekly problem sessions on introductory Python programming topics. Graded homework and exams, held office hours. See more details on the <a href="https://inst.eecs.berkeley.edu/~cs61a/fa20/"> course website </a>
         </p>
   </div>
   <div class="position-relative">
@@ -308,10 +316,25 @@ nav_order: 4
             A fast-paced version of CS 61B during the summer. I held office hours 
             and tutoring sessions over Zoom every week. The tutoring sessions were
             usually me presenting some slides for 30 minutes, then students work on
-            a prepared worksheet and ask questions.
+            a prepared worksheet and ask questions. Below are some sample review materials, arranged by topic.
         </p>
-        <a href="#" class="card-link">
-            Slides to be updated
+        <a href="../assets/pdf/teaching/berkeley/2020/cs61b-sortingalgs.pdf" class="card-link">
+            Sorting algorithms
+        </a>
+        <a href="../assets/pdf/teaching/berkeley/2020/cs61b-sortingalgs2.pdf" class="card-link">
+            Sorting algorithms II
+        </a>
+        <a href="../assets/pdf/teaching/berkeley/2020/cs61b-binarysearchtrees.pdf" class="card-link">
+            Binary search trees
+        </a>
+        <a href="../assets/pdf/teaching/berkeley/2020/cs61b-mst.pdf" class="card-link">
+            Minimum spanning trees
+        </a>
+        <a href="../assets/pdf/teaching/berkeley/2020/cs61b-tries.pdf" class="card-link">
+            K-d trees and tries
+        </a>
+        <a href="../assets/pdf/teaching/berkeley/2020/cs61b-hash.pdf" class="card-link">
+            Heaps and hash table
         </a>
   </div>
   <div class="position-relative">
@@ -322,6 +345,43 @@ nav_order: 4
         <span>
             <!-- add text to icon -->
             UC Berkeley, Summer 2020
+        </span>
+     </a>
+ </div>
+</div>
+
+<!-- ###################################################################### -->
+<div class="card mt-3 p-3">
+    <div class="card-body">
+        <h5 class="card-title">
+            <a href="https://slc.berkeley.edu/home">
+                UC Berkeley Student Learning Center
+            </a>
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            Tutor for Math and Stats
+        </h6>
+        <p class="card-text">
+            Hold weekly office hours on Zoom to answer questions in <a href="https://math.berkeley.edu/courses/choosing/lowerdivcourses">lower division</a> math and stats courses:
+            <ul>
+                <li>Math 1A, Math 1B: Calculus I, II</li>
+                <li>Math 10A, Math 10B: Methods of Mathematics: Calculus, Statistics and Combinatorics</li>
+                <li>Math 32: Precalculus</li>
+                <li>Math 16A, Math 16B: Analytic Geometry and Calculus</li>
+                <li>Math 53: Multivariable Calculus</li>
+                <li>Math 54: Linear Algebra and Differential Equations</li>
+            </ul>
+            Participated in pedagogical discussions of tutor training and effective learning in STEM fields.
+        </p>
+  </div>
+  <div class="position-relative">
+     <a class="float-right">
+        <!-- <i> defines a default icon -->
+        <i class="fas fa-pen">
+        </i>
+        <span>
+            <!-- add text to icon -->
+            UC Berkeley, Spring 2021
         </span>
      </a>
  </div>
