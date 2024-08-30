@@ -2,7 +2,7 @@
 layout: about
 title: About
 permalink: /
-subtitle: <a href='https://cam.uchicago.edu/'>University of Chicago, CAAM</a>. 
+subtitle:
 profile:
   align: right
   image: prof_photo.png
@@ -18,15 +18,29 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Hello! I am Bob, a third-year graduate student at [Computational and Applied Mathematics at University of Chicago](https://cam.uchicago.edu/). I am happily advised by [Prof. Mihai Anitescu](https://web.cels.anl.gov/~anitescu/), and work with many outstanding mentors and peers both in and outside of UChicago. 
+I am a 4th year PhD student at [Computational and Applied Mathematics at University of Chicago](https://cam.uchicago.edu/), advised by [Prof. Mihai Anitescu](https://web.cels.anl.gov/~anitescu/).
 
-Previously, I graduated from UC Berkeley in [Applied Math](https://math.berkeley.edu/), and [Data Science](https://data.berkeley.edu/). During undergraduate studies, I was very fortunate to have worked with [Prof. Daniel Tartakovsky](https://profiles.stanford.edu/daniel-tartakovsky) and [Prof. Lin Lin](https://math.berkeley.edu/~linlin/index.html). I also participated in [BeBOP](https://bebop.cs.berkeley.edu/), organized by [Prof. James Demmel](http://people.eecs.berkeley.edu/~demmel/).
+Prior to Chicago, I graduated from UC Berkeley in [Applied Math](https://math.berkeley.edu/), and [Data Science](https://data.berkeley.edu/). During undergraduate studies, I was very fortunate to have worked with [Prof. Daniel Tartakovsky](https://profiles.stanford.edu/daniel-tartakovsky) and [Prof. Lin Lin](https://math.berkeley.edu/~linlin/index.html). I also participated in [BeBOP](https://bebop.cs.berkeley.edu/) (Summer 2021), organized by [Prof. James Demmel](http://people.eecs.berkeley.edu/~demmel/).
 
 
-I am interested in **scalable numerical methods and algorithm development for scientific computing**, often involving physical models under randomness. I think about the following topics:
+I am broadly interested in developing scalable numerical methods for scientific computing, with a particular focus on characterizing uncertainty in physical systems subject to randomness. 
 
-- Simulating rare events in complex system, such as [cascading failures](https://en.wikipedia.org/wiki/Cascading_failure). 
-- Overcoming the curse of dimensionality in numerical PDEs and probabilistic inference, using low-complexity data structures.
-- Connection of machine learning with optimal control.
+<div style="display: flex; justify-content: space-between; margin-top: 20px;">
+  <div style="width: 45%;">
+    <h3>Interests</h3>
+    <ul style="list-style-type: disc; padding-left: 20px;">
+      <li>Structured matrix and tensor computations</li>
+      <li>Rare events simulation (e.g. cascading failures)</li>
+      <li>Optimal control and deep learning</li>
+    </ul>
+  </div>
+  <div style="width: 45%;">
+    <h3>Education</h3>
+    <ul style="list-style-type: disc; padding-left: 20px;">
+      <li>PhD in Computational and Applied Math. University of Chicago (CCAM), 2021-Present</li>
+      <li>BA in Applied Math and Data Science. UC Berkeley, 2018-2021</li>
+    </ul>
+  </div>
+</div>
 
 **Email**: ```honglizhaobob [at] uchicago.edu```
