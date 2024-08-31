@@ -167,8 +167,19 @@ $$ with stepsizes $$\Delta x = 10^{-3}, \Delta y = 5\times 10^{-4}$$. The integr
 ```
 ### Sampling High-Dimensional Probability Distributions
 
-Please find [the note here](http://honglizhaobob.github.io/assets/pdf/projects/tensor_networks/sampling_notes.pdf). 
+Please find [the note here](http://honglizhaobob.github.io/assets/pdf/projects/tensor_networks/sampling_notes.pdf).
 
-### High-Dimensional Regression with Tensor-Trains
+<div class="pdf-display-window">
+    <iframe src="http://honglizhaobob.github.io/assets/pdf/projects/tensor_networks/sampling_notes.pdf" width="100%" height="100%" style="border: none;"></iframe>
+</div>
+<style>
+.pdf-display-window {
+    width: 800px;
+    height: 600px;
+    border: 2px solid #333;
+    overflow: hidden;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+}
+</style>
 
 

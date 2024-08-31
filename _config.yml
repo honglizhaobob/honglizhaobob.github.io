@@ -117,9 +117,9 @@ bing_site_verification:  # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: Maths, Stats, and More # blog_name will be displayed in your blog page
-blog_nav_title: Maths & More # your blog must have a title for it to be displayed in the nav bar
-blog_description: Have some fun with cool algorithms, math derivations or ML concepts. The game plan on this page is that, if you spot an error (some of which are delibrate), I will buy you a coffee.
+blog_name: Blog Posts # blog_name will be displayed in your blog page
+blog_nav_title: Blog Posts # your blog must have a title for it to be displayed in the nav bar
+blog_description: ... asymptotically caffeinated
 permalink: /blog/:year/:title/
 
 # Pagination
