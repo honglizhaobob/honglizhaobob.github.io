@@ -8,13 +8,28 @@ related_posts: false
 
 Portland, Oregon. Global Sensitivity Analysis in High Dimensional Parameter Spaces
 
+<button onclick="toggleDetails('details-3')" class="btn-custom"> Show More </button>
+
+<div id="details-3" style="display:none;">
+    {% capture markdown %}
 ***
-See [program description here](https://www.siam.org/conferences/cm/conference/ds23) (link may expire). 
 
-* [Meeting organizers and speakers](https://meetings.siam.org/speakdex.cfm?CONFCODE=ds23)
+* [Program description](https://www.siam.org/get-involved/connect-with-a-community/activity-groups/dynamical-systems/).
 
-In this minisymposium, I discussed the problem setup of Sobol' analysis via polynomial chaos expansion, its convergence properties, and the so-called curse of dimensionality. I then discussed how to perform regression descent in tensor-train format and compute the indices. 
+* [Session Link & Abstract](https://meetings.siam.org/sess/dsp_programsess.cfm?SESSIONCODE=75836)
 
-* [Slides](http://honglizhaobob.github.io/files/talks/siam-ds-2023/High_Dimensional_GSA__SIAM_DS_2023_Presentation_.pdf)
+* **Slides**: Please find the research talk [via this link](/assets/pdf/news/siam_ds_2023/High_Dimensional_GSA__SIAM_DS_2023_Presentation_.pdf)
+    {% endcapture %}
+    {{ markdown | markdownify }}
+</div>
 
-
+<script>
+  function toggleDetails(id) {
+    var element = document.getElementById(id);
+    if (element.style.display === "none") {
+      element.style.display = "block";
+    } else {
+      element.style.display = "none";
+    }
+  }
+</script>
