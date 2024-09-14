@@ -351,3 +351,92 @@ print(sum([simulate_outer(100) for _ in range(nmc)])/nmc)
 
 They should all give something close to `3.284`.
 
+##### What is a "Trie"?
+
+For fun, let us implement a classic data structure that supports string prefix search and insertion (in linear time). [Wikipedia](https://en.wikipedia.org/wiki/Trie) does an execellent job for an introduction.
+
+{% highlight python linenos %}
+
+def TrieNode():
+    """ A node in the Trie, contains a list of children. """
+    self.links = {}
+    self.end = False
+def Trie():
+    """ 
+        A Trie data structure that can achieve:
+        => O(n): insertion
+        => O(n): search
+        => O(n*k): space, where k is constant, the number of 
+                   strings stored in the Trie.
+    """
+    def __init__(self):
+        self.root = TrieNode()
+    def insert(self, word):
+        """ 
+            Adds a word into the Trie.
+        """
+        r = self.root
+        for ch in word:
+            if ch not in r.links:
+                r.links[ch] = TrieNode()
+            # keep inserting other characters
+            r = r.links[ch]
+        # mark end of word
+        r.end = True
+    def search(self, word):
+        """ 
+            Returns a boolean signifying whether `word` exists
+            in the Trie.
+        """
+        r = self.root
+        for ch in word:
+            if ch not in r.links:
+                return False
+            else:
+                # traverse down the Trie
+                r = r.links[ch]
+        # check if word ended
+        return r.end
+
+    def prefix(self, p):
+        """ 
+            Check if a string in the Trie exists with prefix 
+            `p`.
+        """
+        r = self.root
+        for ch in p:
+            if ch not in r.links:
+                return False
+            r = r.links[ch]
+        # unlike `search()`, no need to check word ended.
+        return True
+
+    def lcp(self):
+        """ 
+            Returns the longest common prefix of all words 
+            currently stored in the trie.
+        """
+        res = ""
+        r = self.root
+        while r:
+            # if more than 1 link, means they do not share a
+            # common char, break
+            if len(r.links) > 1 or r.end:
+                return res
+            ch = list(r.links.keys())[0]
+            res += ch
+            r = r.links[ch]
+        return res
+
+{% endhighlight %}
+
+"trie" it yourself by copying the above code and testing on some words.
+
+```python
+# input
+words = ["hello", "hell", "helloworld", "helium"]
+t = Trie()
+for word in words:
+    t.insert(word)
+print(t.lcp()) # should return 'hel'
+```
