@@ -1,3 +1,4 @@
+
 // Has to be in the head tag, otherwise a flicker effect will occur.
 
 let toggleTheme = (theme) => {
@@ -26,7 +27,7 @@ let setTheme = (theme) => {
       }
     }
 
-    // Set jupyter notebooks themes.
+    // Set Jupyter notebook themes.
     let jupyterNotebooks = document.getElementsByClassName("jupyter-notebook-iframe-container");
     for (let i = 0; i < jupyterNotebooks.length; i++) {
       let bodyElement = jupyterNotebooks[i].getElementsByTagName("iframe")[0].contentWindow.document.body;
@@ -51,7 +52,7 @@ let setTheme = (theme) => {
       background:
         getComputedStyle(document.documentElement).getPropertyValue(
           "--global-bg-color"
-        ) + "ee", // + 'ee' for trasparency.
+        ) + "ee", // + 'ee' for transparency.
     });
   }
 };
@@ -87,12 +88,10 @@ let transTheme = () => {
   }, 500);
 };
 
+// Default to light mode if no preference is set
 let initTheme = (theme) => {
   if (theme == null || theme == "null") {
-    const userPref = window.matchMedia;
-    if (userPref && userPref("(prefers-color-scheme: dark)").matches) {
-      theme = "dark";
-    }
+    theme = "light";  // Default to light mode
   }
 
   setTheme(theme);

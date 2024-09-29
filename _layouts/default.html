@@ -7,6 +7,11 @@
     <meta http-equiv="refresh" content="3; url={{ site.baseurl }}/" />
   {%- endif -%}
   {% include head.html %}
+
+  <script>
+    // Ensure the page loads in light mode by default
+    document.documentElement.setAttribute("data-theme", "light");
+  </script>
   </head>
 
   <!-- Body -->
