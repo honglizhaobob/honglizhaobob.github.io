@@ -2,12 +2,11 @@
 layout: page
 permalink: /teaching/
 title: Teaching
-description: "I roughly started academic service during the junior year of my undergraduate studies at UC Berkeley. The positions I have held since then include but are not limited to: TA, course tutor, tutor at other places on campus, volunteer tutor/lecturer, and mentor for projects/advising. "
 nav: true
 nav_order: 4
 ---
 
-* Note: For any solutions (or course material in general) you find on my teaching page, please [email me](mailto:honglizhaobob@uchicago.edu) or any referenced collaborator/lecturer before use. If you are a current student, please refer to our institution's policy on academic honesty. Any comments on improvements/errata are also greatly appreciated.
+* For any solutions you find on my teaching page, please [email me](mailto:honglizhaobob@uchicago.edu) or any referenced collaborator/lecturer before use. If you are a current student, please refer to our institution's policy on academic honesty. Any comments on improvements/errata are also greatly appreciated.
 
 <!-- 
     * TODO:
@@ -15,6 +14,60 @@ nav_order: 4
     * See docs: 
         - https://getbootstrap.com/docs/4.0/components/card/
 -->
+
+<!-- ###################################################################### -->
+<div class="card mt-3 p-3">
+    <div class="card-body">
+        <h5 class="card-title">
+            STAT 31015: Mathematical Computation IIA: Convex Optimization
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            TA
+        </h6>
+        <p class="card-text">
+            Graduate-level course in convex optimization.
+        </p>
+  </div>
+  <div class="position-relative">
+     <a class="float-right">
+        <!-- <i> defines a default icon -->
+        <i class="fas fa-pen">
+        </i>
+        <span>
+            <!-- add text to icon -->
+            UChicago, Winter 2025
+        </span>
+     </a>
+ </div>
+</div>
+
+
+<!-- ###################################################################### -->
+<div class="card mt-3 p-3">
+    <div class="card-body">
+        <h5 class="card-title">
+            STAT 37830: Scientific Computing with Python
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            TA
+        </h6>
+        <p class="card-text">
+            Introduction to scientific computing using the Python programming language.
+        </p>
+  </div>
+  <div class="position-relative">
+     <a class="float-right">
+        <!-- <i> defines a default icon -->
+        <i class="fas fa-pen">
+        </i>
+        <span>
+            <!-- add text to icon -->
+            UChicago, Autumn 2024
+        </span>
+     </a>
+ </div>
+</div>
+
 
 <!-- ###################################################################### -->
 <div class="card mt-3 p-3">
@@ -71,7 +124,7 @@ nav_order: 4
         </i>
         <span>
             <!-- add text to icon -->
-            UChicago, Autumn 2023, Spring 2023
+            UChicago, Autumn 2023, Spring 2023, Spring 2024
         </span>
      </a>
  </div>
