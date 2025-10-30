@@ -1,5 +1,5 @@
 ---
-title: 'Normalizing Flow: An Introduction'
+title: 'A survey of math behind normalizing flows'
 date: 2025-10-29
 permalink: /posts/2025/10/normalizing-flow-intro/
 tags:
@@ -7,8 +7,6 @@ tags:
   - generative models
   - normalizing flows
 ---
-
-## Introduction
 
 In this short note, we present normalizing flow as an expressive and powerful generative model under which both sampling and density evaluations are efficiently able to be implemented. Possible applications of normalizing flow can be found in solving high-dimensional partial differential equations (PDE).
 
