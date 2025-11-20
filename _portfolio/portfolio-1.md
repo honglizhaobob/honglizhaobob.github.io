@@ -2,6 +2,7 @@
 title: "LSTM Networks"
 excerpt: "Experimenting with architectures for time-series forecasting"
 collection: portfolio
+comments: true
 ---
 
 This is a toy project where I implemented variants of LSTMs for the purpose of time series forecasting. 

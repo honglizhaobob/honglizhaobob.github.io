@@ -76,6 +76,11 @@
         <!-- End new comment form -->
       {% endif %}
     </section>
+
+  {% when "utterances" %}
+    <h4 class="page__comments-title">{{ comments_label }}</h4>
+    {% include utterances.html %}
+
   {% when "custom" %}
     <h4 class="page__comments-title">{{ comments_label }}</h4>
     <section id="comments"></section>
