@@ -13,45 +13,44 @@ I am a PhD candidate in [Computational and Applied Mathematics](https://cam.uchi
 ## Mini-games
 
 <style>
-.game-button-row {
-  display: flex;
-  gap: 1rem;
-  margin: 1.5rem 0 0.5rem;
-}
+  .game-button-row {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0 0.5rem;
+  }
 
-.game-toggle {
-  display: inline-block;
-  margin: 0;                /* remove big vertical spacing */
-  padding: 0.6rem 1.2rem;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
-}
+  .game-toggle {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+    white-space: nowrap;
+  }
 
+  .game-toggle:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+  }
 
-.game-toggle:hover {
-  background: #2563eb;
-  transform: translateY(-2px);
-}
-
-.hidden {
-  display: none;
-}
+  .hidden {
+    display: none;
+  }
 </style>
 
 
 
 <div class="game-button-row">
-  <button class="game-toggle" data-target="#sudoku-app">Sudoku</button>
-  <button class="game-toggle" data-target="#snake-app">Snake game</button>
+  <button class="game-toggle" data-target="#sudoku-section">Sudoku</button>
+  <button class="game-toggle" data-target="#snake-section">Snake</button>
 </div>
 
 
-<div id="sudoku-app" class="game-section hidden">
+<div id="sudoku-section" class="game-section hidden">
 <div id="sudoku-app">
   <h2>スウドク</h2>
 
@@ -482,7 +481,7 @@ I am a PhD candidate in [Computational and Applied Mathematics](https://cam.uchi
 </div>
 
 
-<div id="snake-app" class="game-section hidden">
+<div id="snake-section" class="game-section hidden">
 <div id="snake-app">
   <h2>スネークゲーム</h2>
 
@@ -899,3 +898,4 @@ document.querySelectorAll(".game-toggle").forEach(btn => {
   });
 });
 </script>
+
