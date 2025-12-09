@@ -518,4 +518,231 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   })();
 
+  // =======================
+  //   MONTE CARLO TRADER
+  // =======================
+  (function () {
+    const app = document.getElementById("mc-trader-app");
+    if (!app) return; // not on About page
+
+    const priceEl   = document.getElementById("mc-price");
+    const stepEl    = document.getElementById("mc-step");
+    const posEl     = document.getElementById("mc-position");
+    const cashEl    = document.getElementById("mc-cash");
+    const equityEl  = document.getElementById("mc-equity");
+    const statusEl  = document.getElementById("mc-status");
+
+    const buyBtn    = document.getElementById("mc-buy");
+    const sellBtn   = document.getElementById("mc-sell");
+    const holdBtn   = document.getElementById("mc-hold");
+    const resetBtn  = document.getElementById("mc-reset");
+
+    const chartCanvas = document.getElementById("mc-chart");
+    const chartCtx    = chartCanvas ? chartCanvas.getContext("2d") : null;
+
+    const maxSteps = 100;
+    const S0 = 100;
+
+    // GBM parameters
+    const mu = 0.05;      // annual drift
+    const sigma = 0.2;    // annual vol
+    const dt = 1.0 / 252; // one "day" per step in model time
+
+    let step, price, cash, position, gameOver;
+    let priceHistory = [];
+
+    function randnBoxMuller() {
+      let u = 0, v = 0;
+      while (u === 0) u = Math.random();
+      while (v === 0) v = Math.random();
+      return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    function nextPrice(S) {
+      const z = randnBoxMuller();
+      const drift = (mu - 0.5 * sigma * sigma) * dt;
+      const diff  = sigma * Math.sqrt(dt) * z;
+      const factor = Math.exp(drift + diff);
+      return Math.max(1, S * factor);
+    }
+
+    function fmtMoney(x) {
+      return (x < 0 ? "-$" : "$") + Math.abs(x).toFixed(2);
+    }
+
+    function drawChart() {
+      if (!chartCtx || !chartCanvas || priceHistory.length === 0) return;
+
+      const ctx = chartCtx;
+      const w = chartCanvas.width;
+      const h = chartCanvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const paddingLeft = 35;
+      const paddingRight = 10;
+      const paddingTop = 10;
+      const paddingBottom = 20;
+
+      const n = priceHistory.length;
+      if (n === 0) return;
+
+      let minP = Math.min.apply(null, priceHistory);
+      let maxP = Math.max.apply(null, priceHistory);
+      if (minP === maxP) {
+        // avoid divide by zero: add small band
+        minP *= 0.95;
+        maxP *= 1.05;
+      } else {
+        const margin = 0.05 * (maxP - minP);
+        minP -= margin;
+        maxP += margin;
+      }
+
+      const x0 = paddingLeft;
+      const x1 = w - paddingRight;
+      const y0 = h - paddingBottom;
+      const y1 = paddingTop;
+
+      // Axes
+      ctx.save();
+      ctx.strokeStyle = "rgba(255,255,255,0.25)";
+      ctx.lineWidth = 1;
+
+      // y-axis
+      ctx.beginPath();
+      ctx.moveTo(x0, y1);
+      ctx.lineTo(x0, y0);
+      ctx.stroke();
+
+      // x-axis
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y0);
+      ctx.stroke();
+
+      // optional horizontal mid-line
+      ctx.strokeStyle = "rgba(255,255,255,0.08)";
+      ctx.setLineDash([4, 4]);
+      const midYVal = (minP + maxP) / 2;
+      const midY = y0 - (midYVal - minP) / (maxP - minP) * (y0 - y1);
+      ctx.beginPath();
+      ctx.moveTo(x0, midY);
+      ctx.lineTo(x1, midY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+
+      // Price path
+      ctx.save();
+      ctx.strokeStyle = "#22c55e";
+      ctx.lineWidth = 2;
+
+      for (let i = 0; i < n; i++) {
+        const t = n === 1 ? 0 : i / (n - 1);
+        const x = x0 + t * (x1 - x0);
+        const p = priceHistory[i];
+        const y = y0 - (p - minP) / (maxP - minP) * (y0 - y1);
+
+        if (i === 0) {
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+
+      // Mark last point
+      const lastP = priceHistory[n - 1];
+      const tLast = n === 1 ? 0 : (n - 1) / (n - 1);
+      const xLast = x0 + tLast * (x1 - x0);
+      const yLast = y0 - (lastP - minP) / (maxP - minP) * (y0 - y1);
+
+      ctx.fillStyle = "#f97316";
+      ctx.beginPath();
+      ctx.arc(xLast, yLast, 3, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function updateUI(message, className) {
+      if (stepEl)   stepEl.textContent   = `${step} / ${maxSteps}`;
+      if (priceEl)  priceEl.textContent  = `$${price.toFixed(2)}`;
+      if (posEl)    posEl.textContent    = position.toString();
+      if (cashEl)   cashEl.textContent   = fmtMoney(cash);
+      if (equityEl) {
+        const equity = cash + position * price;
+        equityEl.textContent = fmtMoney(equity);
+      }
+
+      if (message !== undefined && statusEl) {
+        statusEl.textContent = message;
+        statusEl.className = "mc-status" + (className ? " " + className : "");
+      }
+
+      drawChart();
+    }
+
+    function doStepAfterAction() {
+      if (gameOver) return;
+
+      step += 1;
+      price = nextPrice(price);
+      priceHistory.push(price);
+
+      if (step >= maxSteps) {
+        gameOver = true;
+        const equity = cash + position * price;
+        const msg =
+          equity > 0
+            ? `Horizon reached. Final equity ${fmtMoney(equity)}!`
+            : `Horizon reached. Final equity ${fmtMoney(equity)}.`;
+        updateUI(msg, equity > 0 ? "ok" : "bad");
+      } else {
+        updateUI("Next day. Make your decision.");
+      }
+    }
+
+    function buyOne() {
+      if (gameOver) return;
+      cash -= price;
+      position += 1;
+      doStepAfterAction();
+    }
+
+    function sellOne() {
+      if (gameOver) return;
+      cash += price;
+      position -= 1;
+      doStepAfterAction();
+    }
+
+    function hold() {
+      if (gameOver) return;
+      doStepAfterAction();
+    }
+
+    function resetGame() {
+      step = 0;
+      price = S0;
+      cash = 0;
+      position = 0;
+      gameOver = false;
+      priceHistory = [price];
+      updateUI(
+        "Trade the underlying."
+      );
+    }
+
+    buyBtn   && buyBtn.addEventListener("click", buyOne);
+    sellBtn  && sellBtn.addEventListener("click", sellOne);
+    holdBtn  && holdBtn.addEventListener("click", hold);
+    resetBtn && resetBtn.addEventListener("click", resetGame);
+
+    // initial
+    resetGame();
+  })();
+
+   
 });
