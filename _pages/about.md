@@ -251,232 +251,234 @@ I am a PhD candidate in [Computational and Applied Mathematics](https://cam.uchi
 
 
 <script>
-  (function () {
-    const gridTable = document.getElementById("sudoku-grid");
-    const statusEl = document.getElementById("sudoku-status");
-    const difficultyEl = document.getElementById("sudoku-difficulty");
-    const newBtn = document.getElementById("sudoku-new");
-    const checkBtn = document.getElementById("sudoku-check");
-    const clearBtn = document.getElementById("sudoku-clear");
+  document.addEventListener("DOMContentLoaded", function () {
+    (function () {
+      const gridTable = document.getElementById("sudoku-grid");
+      const statusEl = document.getElementById("sudoku-status");
+      const difficultyEl = document.getElementById("sudoku-difficulty");
+      const newBtn = document.getElementById("sudoku-new");
+      const checkBtn = document.getElementById("sudoku-check");
+      const clearBtn = document.getElementById("sudoku-clear");
 
-    let current = null;   // { puzzle: string, solution: string }
-    let inputs = [];
+      let current = null;   // { puzzle: string, solution: string }
+      let inputs = [];
 
-    /* -------- Sudoku generator -------- */
+      /* -------- Sudoku generator -------- */
 
-    function shuffle(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
-    function isSafe(board, row, col, num) {
-      // Row & column
-      for (let i = 0; i < 9; i++) {
-        if (board[row][i] === num) return false;
-        if (board[i][col] === num) return false;
-      }
-      // 3x3 box
-      const boxRow = Math.floor(row / 3) * 3;
-      const boxCol = Math.floor(col / 3) * 3;
-      for (let r = 0; r < 3; r++) {
-        for (let c = 0; c < 3; c++) {
-          if (board[boxRow + r][boxCol + c] === num) return false;
+      function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
         }
+        return arr;
       }
-      return true;
-    }
 
-    function generateSolvedBoard() {
-      const board = Array.from({ length: 9 }, () => Array(9).fill(0));
-
-      function solveCell(row, col) {
-        if (row === 9) return true;
-        const nextRow = col === 8 ? row + 1 : row;
-        const nextCol = col === 8 ? 0 : col + 1;
-
-        const nums = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-        for (const num of nums) {
-          if (isSafe(board, row, col, num)) {
-            board[row][col] = num;
-            if (solveCell(nextRow, nextCol)) return true;
-            board[row][col] = 0;
+      function isSafe(board, row, col, num) {
+        // Row & column
+        for (let i = 0; i < 9; i++) {
+          if (board[row][i] === num) return false;
+          if (board[i][col] === num) return false;
+        }
+        // 3x3 box
+        const boxRow = Math.floor(row / 3) * 3;
+        const boxCol = Math.floor(col / 3) * 3;
+        for (let r = 0; r < 3; r++) {
+          for (let c = 0; c < 3; c++) {
+            if (board[boxRow + r][boxCol + c] === num) return false;
           }
         }
-        return false;
+        return true;
       }
 
-      solveCell(0, 0);
-      return board;
-    }
+      function generateSolvedBoard() {
+        const board = Array.from({ length: 9 }, () => Array(9).fill(0));
 
-    function makePuzzle(solutionBoard, difficulty) {
-      const puzzle = solutionBoard.map(row => row.slice());
-      // how many cells to remove
-      let removeCount = difficulty === "medium" ? 50 : 40; // easy keeps more clues
-      let removed = 0;
+        function solveCell(row, col) {
+          if (row === 9) return true;
+          const nextRow = col === 8 ? row + 1 : row;
+          const nextCol = col === 8 ? 0 : col + 1;
 
-      while (removed < removeCount) {
-        const r = Math.floor(Math.random() * 9);
-        const c = Math.floor(Math.random() * 9);
-        if (puzzle[r][c] !== 0) {
-          puzzle[r][c] = 0;
-          removed++;
+          const nums = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+          for (const num of nums) {
+            if (isSafe(board, row, col, num)) {
+              board[row][col] = num;
+              if (solveCell(nextRow, nextCol)) return true;
+              board[row][col] = 0;
+            }
+          }
+          return false;
+        }
+
+        solveCell(0, 0);
+        return board;
+      }
+
+      function makePuzzle(solutionBoard, difficulty) {
+        const puzzle = solutionBoard.map(row => row.slice());
+        // how many cells to remove
+        let removeCount = difficulty === "medium" ? 50 : 40; // easy keeps more clues
+        let removed = 0;
+
+        while (removed < removeCount) {
+          const r = Math.floor(Math.random() * 9);
+          const c = Math.floor(Math.random() * 9);
+          if (puzzle[r][c] !== 0) {
+            puzzle[r][c] = 0;
+            removed++;
+          }
+        }
+        return puzzle;
+      }
+
+      function boardToString(board) {
+        return board.map(row => row.join("")).join("");
+      }
+
+      /* -------- UI creation & loading -------- */
+
+      function createGrid() {
+        gridTable.innerHTML = "";
+        inputs = [];
+
+        for (let r = 0; r < 9; r++) {
+          const rowEl = document.createElement("tr");
+          for (let c = 0; c < 9; c++) {
+            const cellEl = document.createElement("td");
+            if (c === 2 || c === 5) cellEl.classList.add("border-right-bold");
+            if (r === 2 || r === 5) cellEl.classList.add("border-bottom-bold");
+
+            const input = document.createElement("input");
+            input.setAttribute("inputmode", "numeric");
+            input.setAttribute("maxlength", "1");
+
+            input.addEventListener("input", (e) => {
+              let v = e.target.value.replace(/[^1-9]/g, "");
+              e.target.value = v.slice(0, 1);
+              statusEl.textContent = "";
+              statusEl.className = "sudoku-status";
+
+              cellEl.classList.remove(
+                "sudoku-cell-error",
+                "sudoku-cell-correct"
+              );
+            });
+
+            cellEl.appendChild(input);
+            rowEl.appendChild(cellEl);
+            inputs.push(input);
+          }
+          gridTable.appendChild(rowEl);
         }
       }
-      return puzzle;
-    }
 
-    function boardToString(board) {
-      return board.map(row => row.join("")).join("");
-    }
+      function loadPuzzle(difficulty) {
+        const solvedBoard = generateSolvedBoard();
+        const puzzleBoard = makePuzzle(solvedBoard, difficulty);
 
-    /* -------- UI creation & loading -------- */
+        current = {
+          solution: boardToString(solvedBoard),
+          puzzle: boardToString(puzzleBoard),
+        };
 
-    function createGrid() {
-      gridTable.innerHTML = "";
-      inputs = [];
+        createGrid();
 
-      for (let r = 0; r < 9; r++) {
-        const rowEl = document.createElement("tr");
-        for (let c = 0; c < 9; c++) {
-          const cellEl = document.createElement("td");
-          if (c === 2 || c === 5) cellEl.classList.add("border-right-bold");
-          if (r === 2 || r === 5) cellEl.classList.add("border-bottom-bold");
+        const cells = gridTable.getElementsByTagName("td");
 
-          const input = document.createElement("input");
-          input.setAttribute("inputmode", "numeric");
-          input.setAttribute("maxlength", "1");
+        for (let i = 0; i < 81; i++) {
+          const ch = current.puzzle[i];
+          const cellEl = cells[i];
+          const input = inputs[i];
 
-          input.addEventListener("input", (e) => {
-            let v = e.target.value.replace(/[^1-9]/g, "");
-            e.target.value = v.slice(0, 1);
-            statusEl.textContent = "";
-            statusEl.className = "sudoku-status";
+          cellEl.classList.remove(
+            "sudoku-cell-prefilled",
+            "sudoku-cell-empty",
+            "sudoku-cell-error",
+            "sudoku-cell-correct"
+          );
 
-            cellEl.classList.remove(
-              "sudoku-cell-error",
-              "sudoku-cell-correct"
-            );
-          });
-
-          cellEl.appendChild(input);
-          rowEl.appendChild(cellEl);
-          inputs.push(input);
+          if (ch === "0") {
+            input.value = "";
+            input.readOnly = false;
+            cellEl.classList.add("sudoku-cell-empty");
+          } else {
+            input.value = ch;
+            input.readOnly = true;
+            cellEl.classList.add("sudoku-cell-prefilled");
+          }
         }
-        gridTable.appendChild(rowEl);
+
+        statusEl.textContent =
+          "Please input numbers from 1--9";
+        statusEl.className = "sudoku-status";
       }
-    }
 
-    function loadPuzzle(difficulty) {
-      const solvedBoard = generateSolvedBoard();
-      const puzzleBoard = makePuzzle(solvedBoard, difficulty);
+      function readGrid() {
+        return inputs.map(inp => (inp.value === "" ? "0" : inp.value)).join("");
+      }
 
-      current = {
-        solution: boardToString(solvedBoard),
-        puzzle: boardToString(puzzleBoard),
-      };
+      function clearNonPrefilled() {
+        const cells = gridTable.getElementsByTagName("td");
+        for (let i = 0; i < 81; i++) {
+          const cellEl = cells[i];
+          const input = inputs[i];
 
-      createGrid();
+          cellEl.classList.remove("sudoku-cell-error", "sudoku-cell-correct");
 
-      const cells = gridTable.getElementsByTagName("td");
+          if (!cellEl.classList.contains("sudoku-cell-prefilled")) {
+            input.value = "";
+          }
+        }
+        statusEl.textContent = "";
+        statusEl.className = "sudoku-status";
+      }
 
-      for (let i = 0; i < 81; i++) {
-        const ch = current.puzzle[i];
-        const cellEl = cells[i];
-        const input = inputs[i];
+      function checkSolution() {
+        if (!current) return;
+        const user = readGrid();
+        const cells = gridTable.getElementsByTagName("td");
+        const anyEmpty = user.includes("0");
 
-        cellEl.classList.remove(
-          "sudoku-cell-prefilled",
-          "sudoku-cell-empty",
-          "sudoku-cell-error",
-          "sudoku-cell-correct"
-        );
+        for (let i = 0; i < 81; i++) {
+          cells[i].classList.remove("sudoku-cell-error", "sudoku-cell-correct");
+        }
 
-        if (ch === "0") {
-          input.value = "";
-          input.readOnly = false;
-          cellEl.classList.add("sudoku-cell-empty");
+        let allCorrect = true;
+        for (let i = 0; i < 81; i++) {
+          const u = user[i];
+          const s = current.solution[i];
+
+          if (u === "0") {
+            allCorrect = false;
+            continue;
+          }
+          if (u !== s) {
+            cells[i].classList.add("sudoku-cell-error");
+            allCorrect = false;
+          } else {
+            cells[i].classList.add("sudoku-cell-correct");
+          }
+        }
+
+        if (allCorrect) {
+          statusEl.textContent = "クリア！よくできました！";
+          statusEl.className = "sudoku-status ok";
+        } else if (anyEmpty) {
+          statusEl.textContent = "まだ完成していません。";
+          statusEl.className = "sudoku-status bad";
         } else {
-          input.value = ch;
-          input.readOnly = true;
-          cellEl.classList.add("sudoku-cell-prefilled");
+          statusEl.textContent = "どこか間違えています。";
+          statusEl.className = "sudoku-status bad";
         }
       }
 
-      statusEl.textContent =
-        "Please input numbers from 1--9";
-      statusEl.className = "sudoku-status";
-    }
+      newBtn.addEventListener("click", () => loadPuzzle(difficultyEl.value));
+      checkBtn.addEventListener("click", checkSolution);
+      clearBtn.addEventListener("click", clearNonPrefilled);
 
-    function readGrid() {
-      return inputs.map(inp => (inp.value === "" ? "0" : inp.value)).join("");
-    }
-
-    function clearNonPrefilled() {
-      const cells = gridTable.getElementsByTagName("td");
-      for (let i = 0; i < 81; i++) {
-        const cellEl = cells[i];
-        const input = inputs[i];
-
-        cellEl.classList.remove("sudoku-cell-error", "sudoku-cell-correct");
-
-        if (!cellEl.classList.contains("sudoku-cell-prefilled")) {
-          input.value = "";
-        }
-      }
-      statusEl.textContent = "";
-      statusEl.className = "sudoku-status";
-    }
-
-    function checkSolution() {
-      if (!current) return;
-      const user = readGrid();
-      const cells = gridTable.getElementsByTagName("td");
-      const anyEmpty = user.includes("0");
-
-      for (let i = 0; i < 81; i++) {
-        cells[i].classList.remove("sudoku-cell-error", "sudoku-cell-correct");
-      }
-
-      let allCorrect = true;
-      for (let i = 0; i < 81; i++) {
-        const u = user[i];
-        const s = current.solution[i];
-
-        if (u === "0") {
-          allCorrect = false;
-          continue;
-        }
-        if (u !== s) {
-          cells[i].classList.add("sudoku-cell-error");
-          allCorrect = false;
-        } else {
-          cells[i].classList.add("sudoku-cell-correct");
-        }
-      }
-
-      if (allCorrect) {
-        statusEl.textContent = "クリア！よくできました！";
-        statusEl.className = "sudoku-status ok";
-      } else if (anyEmpty) {
-        statusEl.textContent = "まだ完成していません。";
-        statusEl.className = "sudoku-status bad";
-      } else {
-        statusEl.textContent = "どこか間違えています。";
-        statusEl.className = "sudoku-status bad";
-      }
-    }
-
-    newBtn.addEventListener("click", () => loadPuzzle(difficultyEl.value));
-    checkBtn.addEventListener("click", checkSolution);
-    clearBtn.addEventListener("click", clearNonPrefilled);
-
-    // Initial puzzle
-    loadPuzzle(difficultyEl.value);
-  })();
+      // Initial puzzle
+      loadPuzzle(difficultyEl.value);
+    })();
+  });
 </script>
 </div>
 
@@ -645,257 +647,264 @@ I am a PhD candidate in [Computational and Applied Mathematics](https://cam.uchi
 </style>
 
 <script>
-  (function () {
-    const canvas = document.getElementById("snake-canvas");
-    const ctx = canvas.getContext("2d");
-    const statusEl = document.getElementById("snake-status");
-    const scoreEl = document.getElementById("snake-score-value");
-    const startBtn = document.getElementById("snake-start");
-    const pauseBtn = document.getElementById("snake-pause");
-    const resetBtn = document.getElementById("snake-reset");
-    const mobileButtons = document.querySelectorAll(".snake-mobile-controls button");
+  document.addEventListener("DOMContentLoaded", function () {
+    (function () {
+      const canvas = document.getElementById("snake-canvas");
+      const ctx = canvas.getContext("2d");
+      const statusEl = document.getElementById("snake-status");
+      const scoreEl = document.getElementById("snake-score-value");
+      const startBtn = document.getElementById("snake-start");
+      const pauseBtn = document.getElementById("snake-pause");
+      const resetBtn = document.getElementById("snake-reset");
+      const mobileButtons = document.querySelectorAll(".snake-mobile-controls button");
 
-    const tileSize = 16;
-    const tilesX = canvas.width / tileSize;
-    const tilesY = canvas.height / tileSize;
+      const tileSize = 16;
+      const tilesX = canvas.width / tileSize;
+      const tilesY = canvas.height / tileSize;
 
-    let snake, direction, nextDirection, food, score, tickId, running, gameOver;
+      let snake, direction, nextDirection, food, score, tickId, running, gameOver;
 
-    function initGame() {
-      snake = [
-        { x: 8, y: 10 },
-        { x: 7, y: 10 },
-        { x: 6, y: 10 },
-      ];
-      direction = { x: 1, y: 0 };
-      nextDirection = { x: 1, y: 0 };
-      score = 0;
-      scoreEl.textContent = score;
-      gameOver = false;
-      running = false;
-      statusEl.textContent = "スタートを押してゲーム開始。WASDで操作。";
-      statusEl.className = "snake-status";
-      placeFood();
-      draw();
-    }
+      function initGame() {
+        snake = [
+          { x: 8, y: 10 },
+          { x: 7, y: 10 },
+          { x: 6, y: 10 },
+        ];
+        direction = { x: 1, y: 0 };
+        nextDirection = { x: 1, y: 0 };
+        score = 0;
+        scoreEl.textContent = score;
+        gameOver = false;
+        running = false;
+        statusEl.textContent = "スタートを押してゲーム開始。WASDで操作。";
+        statusEl.className = "snake-status";
+        placeFood();
+        draw();
+      }
 
-    function placeFood() {
-      while (true) {
-        const fx = Math.floor(Math.random() * tilesX);
-        const fy = Math.floor(Math.random() * tilesY);
-        const onSnake = snake.some(seg => seg.x === fx && seg.y === fy);
-        if (!onSnake) {
-          food = { x: fx, y: fy };
-          break;
+      function placeFood() {
+        while (true) {
+          const fx = Math.floor(Math.random() * tilesX);
+          const fy = Math.floor(Math.random() * tilesY);
+          const onSnake = snake.some(seg => seg.x === fx && seg.y === fy);
+          if (!onSnake) {
+            food = { x: fx, y: fy };
+            break;
+          }
         }
       }
-    }
 
-    function draw() {
-      // background
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      function draw() {
+        // background
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // grid (subtle)
-      ctx.save();
-      ctx.strokeStyle = "rgba(255,255,255,0.05)";
-      ctx.lineWidth = 1;
-      for (let x = 0; x <= tilesX; x++) {
-        ctx.beginPath();
-        ctx.moveTo(x * tileSize, 0);
-        ctx.lineTo(x * tileSize, canvas.height);
-        ctx.stroke();
-      }
-      for (let y = 0; y <= tilesY; y++) {
-        ctx.beginPath();
-        ctx.moveTo(0, y * tileSize);
-        ctx.lineTo(canvas.width, y * tileSize);
-        ctx.stroke();
-      }
-      ctx.restore();
-
-      // food
-      ctx.save();
-      ctx.fillStyle = "#f97316"; // orange
-      ctx.beginPath();
-      ctx.roundRect(
-        food.x * tileSize + 2,
-        food.y * tileSize + 2,
-        tileSize - 4,
-        tileSize - 4,
-        4
-      );
-      ctx.fill();
-      ctx.restore();
-
-      // snake
-      snake.forEach((seg, idx) => {
-        const isHead = idx === 0;
+        // grid (subtle)
         ctx.save();
-        ctx.fillStyle = isHead ? "#22c55e" : "#4ade80";
+        ctx.strokeStyle = "rgba(255,255,255,0.05)";
+        ctx.lineWidth = 1;
+        for (let x = 0; x <= tilesX; x++) {
+          ctx.beginPath();
+          ctx.moveTo(x * tileSize, 0);
+          ctx.lineTo(x * tileSize, canvas.height);
+          ctx.stroke();
+        }
+        for (let y = 0; y <= tilesY; y++) {
+          ctx.beginPath();
+          ctx.moveTo(0, y * tileSize);
+          ctx.lineTo(canvas.width, y * tileSize);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // food
+        ctx.save();
+        ctx.fillStyle = "#f97316"; // orange
         ctx.beginPath();
         ctx.roundRect(
-          seg.x * tileSize + 1,
-          seg.y * tileSize + 1,
-          tileSize - 2,
-          tileSize - 2,
-          isHead ? 5 : 3
+          food.x * tileSize + 2,
+          food.y * tileSize + 2,
+          tileSize - 4,
+          tileSize - 4,
+          4
         );
         ctx.fill();
         ctx.restore();
+
+        // snake
+        snake.forEach((seg, idx) => {
+          const isHead = idx === 0;
+          ctx.save();
+          ctx.fillStyle = isHead ? "#22c55e" : "#4ade80";
+          ctx.beginPath();
+          ctx.roundRect(
+            seg.x * tileSize + 1,
+            seg.y * tileSize + 1,
+            tileSize - 2,
+            tileSize - 2,
+            isHead ? 5 : 3
+          );
+          ctx.fill();
+          ctx.restore();
+        });
+      }
+
+      function step() {
+        if (!running || gameOver) return;
+
+        direction = nextDirection;
+
+        const head = snake[0];
+        const newHead = {
+          x: head.x + direction.x,
+          y: head.y + direction.y
+        };
+
+        // wall collision
+        if (
+          newHead.x < 0 ||
+          newHead.x >= tilesX ||
+          newHead.y < 0 ||
+          newHead.y >= tilesY
+        ) {
+          endGameOutsideOfWall();
+          return;
+        }
+
+        // self collision
+        if (snake.some(seg => seg.x === newHead.x && seg.y === newHead.y)) {
+          endGame();
+          return;
+        }
+
+        snake.unshift(newHead);
+
+        // food
+        if (newHead.x === food.x && newHead.y === food.y) {
+          score++;
+          scoreEl.textContent = score;
+          placeFood();
+        } else {
+          snake.pop();
+        }
+
+        draw();
+      }
+
+      function endGame() {
+        gameOver = true;
+        running = false;
+        clearInterval(tickId);
+        statusEl.textContent = "ゲームオーバー！";
+        statusEl.className = "snake-status bad";
+      }
+
+      function endGameOutsideOfWall() {
+        gameOver = true;
+        running = false;
+        clearInterval(tickId);
+        statusEl.textContent = "ドン！";
+        statusEl.className = "snake-status bad";
+      }
+
+      function setDirection(dx, dy) {
+        // prevent 180-degree turns
+        if (!running && !gameOver) running = true;
+        if (dx === -direction.x && dy === -direction.y) return;
+        nextDirection = { x: dx, y: dy };
+      }
+
+      // Keyboard controls
+      window.addEventListener("keydown", (e) => {
+        switch (e.key) {
+          case "ArrowUp":
+          case "w":
+          case "W":
+            setDirection(0, -1);
+            break;
+          case "ArrowDown":
+          case "s":
+          case "S":
+            setDirection(0, 1);
+            break;
+          case "ArrowLeft":
+          case "a":
+          case "A":
+            setDirection(-1, 0);
+            break;
+          case "ArrowRight":
+          case "d":
+          case "D":
+            setDirection(1, 0);
+            break;
+          case " ":
+            togglePause();
+            break;
+        }
       });
-    }
 
-    function step() {
-      if (!running || gameOver) return;
-
-      direction = nextDirection;
-
-      const head = snake[0];
-      const newHead = {
-        x: head.x + direction.x,
-        y: head.y + direction.y
-      };
-
-      // wall collision
-      if (
-        newHead.x < 0 ||
-        newHead.x >= tilesX ||
-        newHead.y < 0 ||
-        newHead.y >= tilesY
-      ) {
-        endGameOutsideOfWall();
-        return;
-      }
-
-      // self collision
-      if (snake.some(seg => seg.x === newHead.x && seg.y === newHead.y)) {
-        endGame();
-        return;
-      }
-
-      snake.unshift(newHead);
-
-      // food
-      if (newHead.x === food.x && newHead.y === food.y) {
-        score++;
-        scoreEl.textContent = score;
-        placeFood();
-      } else {
-        snake.pop();
-      }
-
-      draw();
-    }
-
-    function endGame() {
-      gameOver = true;
-      running = false;
-      clearInterval(tickId);
-      statusEl.textContent = "ゲームオーバー！";
-      statusEl.className = "snake-status bad";
-    }
-
-    function endGameOutsideOfWall() {
-      gameOver = true;
-      running = false;
-      clearInterval(tickId);
-      statusEl.textContent = "ドン！";
-      statusEl.className = "snake-status bad";
-    }
-
-    function setDirection(dx, dy) {
-      // prevent 180-degree turns
-      if (!running && !gameOver) running = true;
-      if (dx === -direction.x && dy === -direction.y) return;
-      nextDirection = { x: dx, y: dy };
-    }
-
-    // Keyboard controls
-    window.addEventListener("keydown", (e) => {
-      switch (e.key) {
-        case "ArrowUp":
-        case "w":
-        case "W":
-          setDirection(0, -1);
-          break;
-        case "ArrowDown":
-        case "s":
-        case "S":
-          setDirection(0, 1);
-          break;
-        case "ArrowLeft":
-        case "a":
-        case "A":
-          setDirection(-1, 0);
-          break;
-        case "ArrowRight":
-        case "d":
-        case "D":
-          setDirection(1, 0);
-          break;
-        case " ":
-          togglePause();
-          break;
-      }
-    });
-
-    // Mobile controls
-    mobileButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const dir = btn.getAttribute("data-dir");
-        if (dir === "up") setDirection(0, -1);
-        if (dir === "down") setDirection(0, 1);
-        if (dir === "left") setDirection(-1, 0);
-        if (dir === "right") setDirection(1, 0);
+      // Mobile controls
+      mobileButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const dir = btn.getAttribute("data-dir");
+          if (dir === "up") setDirection(0, -1);
+          if (dir === "down") setDirection(0, 1);
+          if (dir === "left") setDirection(-1, 0);
+          if (dir === "right") setDirection(1, 0);
+        });
       });
-    });
 
-    function startGame() {
-      if (running && !gameOver) return;
-      if (gameOver) {
-        initGame();
-      }
-      running = true;
-      statusEl.textContent = "プレイ中。。。";
-      statusEl.className = "snake-status ok";
-      clearInterval(tickId);
-      tickId = setInterval(step, 110); // game speed
-    }
-
-    function togglePause() {
-      if (gameOver) return;
-      running = !running;
-      if (running) {
+      function startGame() {
+        if (running && !gameOver) return;
+        if (gameOver) {
+          initGame();
+        }
+        running = true;
         statusEl.textContent = "プレイ中。。。";
         statusEl.className = "snake-status ok";
-      } else {
-        statusEl.textContent = "一時停止中";
-        statusEl.className = "snake-status";
+        clearInterval(tickId);
+        tickId = setInterval(step, 110); // game speed
       }
-    }
 
-    function resetGame() {
-      clearInterval(tickId);
+      function togglePause() {
+        if (gameOver) return;
+        running = !running;
+        if (running) {
+          statusEl.textContent = "プレイ中。。。";
+          statusEl.className = "snake-status ok";
+        } else {
+          statusEl.textContent = "一時停止中";
+          statusEl.className = "snake-status";
+        }
+      }
+
+      function resetGame() {
+        clearInterval(tickId);
+        initGame();
+      }
+
+      startBtn.addEventListener("click", startGame);
+      pauseBtn.addEventListener("click", togglePause);
+      resetBtn.addEventListener("click", resetGame);
+
+      // initial
       initGame();
-    }
-
-    startBtn.addEventListener("click", startGame);
-    pauseBtn.addEventListener("click", togglePause);
-    resetBtn.addEventListener("click", resetGame);
-
-    // initial
-    initGame();
-  })();
+    })();
+  });
 </script>
 </div>
 
 
 <script>
-document.querySelectorAll(".game-toggle").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const target = document.querySelector(btn.dataset.target);
-    target.classList.toggle("hidden");
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".game-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = document.querySelector(btn.dataset.target);
+      if (target) {
+        target.classList.toggle("hidden");
+      }
+    });
   });
 });
 </script>
+
 
