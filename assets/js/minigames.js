@@ -543,10 +543,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const maxSteps = 100;
     const S0 = 100;
 
-    // GBM parameters
+    // Diffusion part (GBM-like)
     const mu = 0.05;      // annual drift
     const sigma = 0.2;    // annual vol
     const dt = 1.0 / 252; // one "day" per step in model time
+
+    // Jump part (Merton jump–diffusion)
+    const lambdaJ = 1.0;    // expected number of jumps per year
+    const muJ     = -0.02;  // mean of log jump size
+    const sigmaJ  = 0.20;   // vol of log jump size
+
+    // Precompute E[J - 1] to adjust drift
+    const EJ = Math.exp(muJ + 0.5 * sigmaJ * sigmaJ);
+    const EJminus1 = EJ - 1.0;
 
     let step, price, cash, position, gameOver;
     let priceHistory = [];
@@ -558,12 +567,24 @@ document.addEventListener("DOMContentLoaded", function () {
       return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
     }
 
+    // One-step jump–diffusion evolution
     function nextPrice(S) {
+      // diffusion part
       const z = randnBoxMuller();
-      const drift = (mu - 0.5 * sigma * sigma) * dt;
-      const diff  = sigma * Math.sqrt(dt) * z;
-      const factor = Math.exp(drift + diff);
-      return Math.max(1, S * factor);
+      const driftDiff = (mu - 0.5 * sigma * sigma - lambdaJ * EJminus1) * dt;
+      const diff      = sigma * Math.sqrt(dt) * z;
+      let Snew        = S * Math.exp(driftDiff + diff);
+
+      // jump part (at most one jump per step for simplicity)
+      const pJump = lambdaJ * dt;
+      if (Math.random() < pJump) {
+        const zJ = randnBoxMuller();
+        const logJ = muJ + sigmaJ * zJ;
+        const J = Math.exp(logJ); // multiplicative jump
+        Snew *= J;
+      }
+
+      return Math.max(1, Snew);
     }
 
     function fmtMoney(x) {
@@ -590,7 +611,6 @@ document.addEventListener("DOMContentLoaded", function () {
       let minP = Math.min.apply(null, priceHistory);
       let maxP = Math.max.apply(null, priceHistory);
       if (minP === maxP) {
-        // avoid divide by zero: add small band
         minP *= 0.95;
         maxP *= 1.05;
       } else {
@@ -700,7 +720,7 @@ document.addEventListener("DOMContentLoaded", function () {
             : `Horizon reached. Final equity ${fmtMoney(equity)}.`;
         updateUI(msg, equity > 0 ? "ok" : "bad");
       } else {
-        updateUI("Next day. Make your decision.");
+        updateUI("Next day. Jumps may occur — trade carefully.");
       }
     }
 
@@ -731,7 +751,7 @@ document.addEventListener("DOMContentLoaded", function () {
       gameOver = false;
       priceHistory = [price];
       updateUI(
-        "Trade the underlying."
+        "Trade the underlying under a jump–diffusion model."
       );
     }
 

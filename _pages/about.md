@@ -352,7 +352,7 @@ at the University of Chicago. I received my B.A. from UC Berkeley in
     </div>
 
     <div class="mc-note">
-      GBM model. Try to end with positive equity.
+      GBM model with jumps. Try to end with positive equity.
     </div>
   </div>
 
