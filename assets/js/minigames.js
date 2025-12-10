@@ -540,7 +540,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const chartCanvas = document.getElementById("mc-chart");
     const chartCtx    = chartCanvas ? chartCanvas.getContext("2d") : null;
 
-    const maxSteps = 100;
+    const maxSteps = 252;
     const S0 = 100;
 
     // Diffusion part (GBM-like)

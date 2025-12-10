@@ -10,492 +10,300 @@ redirect_from:
 I am a PhD candidate in [Computational and Applied Mathematics](https://cam.uchicago.edu/)
 at the University of Chicago. I received my B.A. from UC Berkeley in
 [Applied Math](https://math.berkeley.edu/home) and
-[Data Science](https://cdss.berkeley.edu/dsus) in 2021.
+[Data Science](https://cdss.berkeley.edu/dsus) in 2021.[^courses]
 
-## Mini-games
 
-<style>
-  .game-button-row {
-    display: flex;
-    gap: 1rem;
-    margin: 1.5rem 0 0.5rem;
-  }
-  .game-toggle {
-    display: inline-block;
-    padding: 0.6rem 1.2rem;
-    background: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.15s ease;
-    white-space: nowrap;
-  }
-  .game-toggle:hover {
-    background: #2563eb;
-    transform: translateY(-2px);
-  }
-  .hidden { display: none; }
-</style>
-
-<div class="game-button-row">
-  <button class="game-toggle" data-target="#sudoku-section">Sudoku</button>
-  <button class="game-toggle" data-target="#snake-section">Snake</button>
-  <button class="game-toggle" data-target="#mc-trader-section">MC Trader</button>
-</div>
-
-<!-- ============================= -->
-<!-- SUDOKU GAME HTML + CSS        -->
-<!-- ============================= -->
-
-<div id="sudoku-section" class="game-section hidden">
-<div id="sudoku-app">
-  <h2>スウドク</h2>
-
-  <div class="sudoku-controls">
-    <label class="sudoku-label">
-      難易度:
-      <select id="sudoku-difficulty">
-        <option value="easy">やさしい</option>
-        <option value="medium">ふつう</option>
-      </select>
-    </label>
-    <button id="sudoku-new">ランダム生成</button>
-    <button id="sudoku-check">チェック</button>
-    <button id="sudoku-clear">クリア</button>
-  </div>
-
-  <div id="sudoku-table-wrapper">
-    <table id="sudoku-grid" class="sudoku-grid"></table>
-  </div>
-
-  <div id="sudoku-status" class="sudoku-status"></div>
-</div>
+## Teaching
 
 <style>
-  #sudoku-app {
-    max-width: 550px;
-    margin: 3rem auto;
-    padding: 1rem 1.25rem 1rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(0,0,0,0.25);
-    backdrop-filter: blur(10px);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  }
-  #sudoku-app h2 {
-    text-align: center;
-    margin: 0 0 0.75rem;
-    font-size: 1.5rem;
-    letter-spacing: 0.08em;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-    padding-bottom: 0.5rem;
-  }
-  .sudoku-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.9rem;
-    font-size: 0.85rem;
-  }
-  .sudoku-label {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .sudoku-controls select {
-    font-size: 0.85rem;
-    padding: 0.3rem 0.7rem;
-    border-radius: 6px;
-    border: 1px solid rgba(255,255,255,0.3);
-    background: rgba(0,0,0,0.4);
-    color: white;
-  }
-  .sudoku-controls button {
-    font-size: 0.85rem;
-    padding: 0.35rem 1rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    color: white;
-    font-weight: 500;
-    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
-  }
-  #sudoku-new { background: #3b82f6; }
-  #sudoku-new:hover { background: #2563eb; transform: translateY(-1px); box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4); }
-  #sudoku-check { background: #10b981; }
-  #sudoku-check:hover { background: #059669; transform: translateY(-1px); box-shadow: 0 2px 6px rgba(5, 150, 105, 0.4); }
-  #sudoku-clear { background: #ef4444; }
-  #sudoku-clear:hover { background: #dc2626; transform: translateY(-1px); box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4); }
+/* Section header */
+.uni-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #c5dcc4ff;
+  margin: 1.5rem 0 0.6rem 0;
+  border-left: 4px solid #0ea5e9;
+  padding-left: 0.6rem;
+}
 
-  #sudoku-table-wrapper {
-    display: flex;
-    justify-content: center;
-  }
-  .sudoku-grid {
-    border-collapse: collapse;
-    margin: 0 auto;
-    background: #181818;
-    border: 2px solid #f5f5f5;
-  }
-  .sudoku-grid td {
-    width: 36px;
-    height: 36px;
-    border: 1px solid #444;
-    text-align: center;
-    padding: 0;
-    background: #262626;
-  }
-  .border-right-bold { border-right: 2px solid #f5f5f5; }
-  .border-bottom-bold { border-bottom: 2px solid #f5f5f5; }
-  .sudoku-grid input {
-    width: 100%;
-    height: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    text-align: center;
-    font-size: 1.05rem;
-    color: #f5f5f5;
-  }
-  .sudoku-cell-prefilled { background: #1b1b1b; }
-  .sudoku-cell-prefilled input { font-weight: 600; color: white; }
-  .sudoku-cell-empty { background: #262626; }
-  .sudoku-cell-error { background: rgba(255, 80, 80, 0.35) !important; }
-  .sudoku-cell-correct { background: rgba(120, 200, 120, 0.28) !important; }
-  .sudoku-status {
-    margin-top: 0.9rem;
-    min-height: 1.1rem;
-    font-size: 0.85rem;
-    text-align: center;
-  }
-  .sudoku-status.ok { color: #6ee7b7; }
-  .sudoku-status.bad { color: #fca5a5; }
+/* Grid layout */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Base card style */
+.course-card {
+  --accent: #0ea5e9;          /* default accent, can be overridden per card */
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 14px 16px 12px 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease,
+              background 0.18s ease;
+  position: relative;
+}
+
+/* colorful top accent bar */
+.course-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  border-top: 3px solid var(--accent);
+  pointer-events: none;
+}
+
+/* Hover effect */
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(15,23,42,0.16);
+  border-color: var(--accent);
+  background: #f8fafc;
+}
+
+/* Card text */
+.course-name {
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.course-sem {
+  color: #475569;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.course-desc {
+  margin-top: 6px;
+  color: #475569;
+  font-size: 0.85rem;
+}
+
+/* Buttons / resource links */
+.course-actions {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.course-btn {
+  font-size: 0.78rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.8);
+  background: #ffffff;
+  color: #0f172a;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+              transform 0.15s ease;
+}
+
+.course-btn:hover {
+  background: #e0f2fe;
+  border-color: #0284c7;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+/* subtle variant that uses the card accent color */
+.course-btn.accent {
+  border-color: var(--accent);
+  color: #0f172a;
+}
+.course-btn.accent:hover {
+  background: rgba(14,165,233,0.06);
+}
+
+/* Color variants for cards */
+.card-blue    { --accent: #0ea5e9; }
+.card-emerald { --accent: #10b981; }
+.card-amber   { --accent: #f59e0b; }
+.card-violet  { --accent: #8b5cf6; }
+.card-rose    { --accent: #fb7185; }
+
+/* Make links inside descriptions look nice */
+.course-card a {
+  color: #0284c7;
+  text-decoration: none;
+}
+.course-card a:hover {
+  text-decoration: underline;
+}
 </style>
+
+<div class="uni-title">The University of Chicago</div>
+
+<div class="course-grid">
+
+  <div class="course-card card-blue">
+    <div class="course-name">STAT 31015: Convex Optimization</div>
+    <div class="course-sem">Wi25</div>
+  </div>
+
+  <div class="course-card card-emerald">
+    <div class="course-name">STAT 37830: Computing with Python</div>
+    <div class="course-sem">Au24, Au25</div>
+  </div>
+
+  <div class="course-card card-amber">
+    <div class="course-name">CAAM 31020: Nonlinear Optimization</div>
+    <div class="course-sem">Wi24</div>
+  </div>
+
+  <div class="course-card card-violet">
+    <div class="course-name">MATH 21100: Numerical Analysis</div>
+    <div class="course-sem">Au23, Sp23, Sp24, Sp25</div>
+    <div class="course-actions">
+      <a class="course-btn accent" href="../files/teaching/uchicago/2023/math21100/Math221_Solutions.pdf" target="_blank">
+        Solutions
+      </a>
+      <a class="course-btn" href="../files/teaching/uchicago/2023/math21100/Math211_Disc.pdf" target="_blank">
+        Worksheets
+      </a>
+    </div>
+  </div>
+
+  <div class="course-card card-rose">
+    <div class="course-name">STAT 31100: Numerical PDEs</div>
+    <div class="course-sem">Wi23</div>
+    <div class="course-actions">
+      <a class="course-btn accent" href="../files/teaching/uchicago/2023/stat31100/matlab_intro.pdf" target="_blank">
+        MATLAB intro
+      </a>
+      <a class="course-btn" href="../files/teaching/uchicago/2023/stat31100/adv2d.m" target="_blank">
+        adv2d.m
+      </a>
+      <a class="course-btn" href="../files/teaching/uchicago/2023/stat31100/laplacian2d.m" target="_blank">
+        laplacian2d.m
+      </a>
+    </div>
+  </div>
+
+  <div class="course-card card-blue">
+    <div class="course-name">STAT 31120: Numerical SDEs</div>
+    <div class="course-sem">Au22, Wi21</div>
+    <div class="course-actions">
+      <a class="course-btn accent" href="https://github.com/honglizhaobob/Winter21Autumn22Stat31120" target="_blank">
+        Solutions (GitHub)
+      </a>
+    </div>
+  </div>
+
+  <div class="course-card card-emerald">
+    <div class="course-name">CMSC 25300: Foundations of Machine Learning</div>
+    <div class="course-sem">Au22</div>
+  </div>
+
+</div>
+
+<div class="uni-title">University of California, Berkeley</div>
+
+<div class="course-grid">
+
+  <div class="course-card card-violet">
+    <div class="course-name">DATA 198: Applied Data Science Research</div>
+    <div class="course-sem">Sp21</div>
+    <div class="course-actions">
+      <a class="course-btn accent" href="https://ds-modules.github.io/DATA198-SP21.github.io/sp21/" target="_blank">
+        Course site
+      </a>
+      <a class="course-btn" href="../files/teaching/berkeley/2021/DATA198/covid19_vacc_prog.pdf" target="_blank">
+        EDA slide
+      </a>
+    </div>
+  </div>
+
+  <div class="course-card card-amber">
+    <div class="course-name">MATH 128B: Advanced Numerical Analysis</div>
+    <div class="course-sem">Sp21</div>
+    <div class="course-actions">
+      <a class="course-btn accent" href="https://github.com/honglizhaobob/Sp21Math128B" target="_blank">
+        Solutions (GitHub)
+      </a>
+    </div>
+  </div>
+
+  <div class="course-card card-blue">
+    <div class="course-name">MATH 104: Real Analysis</div>
+    <div class="course-sem">Sp21, Fa20, Sp20</div>
+  </div>
+
+  <div class="course-card card-emerald">
+    <div class="course-name">CS 61A: Structure and Interpretation of Computer Programs</div>
+    <div class="course-sem">Fa20</div>
+  </div>
+
+  <div class="course-card card-rose">
+    <div class="course-name">CS 61B: Data Structures</div>
+    <div class="course-sem">Su20</div>
+    <div class="course-actions">
+      <a class="course-btn accent" href="https://cs61bl.org/su20/" target="_blank">
+        Course site
+      </a>
+      <a class="course-btn" href="../files/teaching/berkeley/2020/cs61b-sortingalgs.pdf" target="_blank">
+        Sorting I
+      </a>
+      <a class="course-btn" href="../files/teaching/berkeley/2020/cs61b-sortingalgs2.pdf" target="_blank">
+        Sorting II
+      </a>
+      <a class="course-btn" href="../files/teaching/berkeley/2020/cs61b-binarysearchtrees.pdf" target="_blank">
+        Binary trees
+      </a>
+      <a class="course-btn" href="../files/teaching/berkeley/2020/cs61b-mst.pdf" target="_blank">
+        Min span trees
+      </a>
+      <a class="course-btn" href="../files/teaching/berkeley/2020/cs61b-tries.pdf" target="_blank">
+        K-d trees
+      </a>
+      <a class="course-btn" href="../files/teaching/berkeley/2020/cs61b-hash.pdf" target="_blank">
+        Heaps and hash
+      </a>
+    </div>
+  </div>
+
+  <div class="course-card card-amber">
+    <div class="course-name">Student Learning Center</div>
+    <div class="course-sem">Sp21</div>
+    <div class="course-actions">
+      <a class="course-btn" href="https://math.berkeley.edu/courses/choosing/lowerdivcourses" target="_blank">
+        Courses covered
+      </a>
+    </div>
+  </div>
+
 </div>
 
 
 
-<!-- ============================= -->
-<!-- SNAKE GAME HTML + CSS         -->
-<!-- ============================= -->
+[^courses]: You can find a full accounting of my undergraduate courses and awards [here](/files/html/calclasses.html).
 
-<div id="snake-section" class="game-section hidden">
-<div id="snake-app">
-  <h2>スネークゲーム</h2>
 
-  <div class="snake-controls">
-    <button id="snake-start">スタート</button>
-    <button id="snake-pause">一時停止</button>
-    <button id="snake-reset">リセット</button>
-    <span class="snake-score">スコア: <span id="snake-score-value">0</span></span>
+---
+
+<div id="minigames-wrapper" class="collapsed">
+  <button id="minigames-toggle" class="minigames-header">
+    ▼ Interactive Content 
+  </button>
+
+  <div id="minigames-content" class="hidden">
+    {% include minigames.html %}
   </div>
-
-  <div id="snake-canvas-wrapper">
-    <canvas id="snake-canvas" width="320" height="320"></canvas>
-  </div>
-
-  <div class="snake-mobile-controls">
-    <button data-dir="up">▲</button>
-    <div class="snake-mobile-middle">
-      <button data-dir="left">◀</button>
-      <button data-dir="right">▶</button>
-    </div>
-    <button data-dir="down">▼</button>
-  </div>
-
-  <div id="snake-status" class="snake-status"></div>
 </div>
 
-<style>
-  #snake-app {
-    max-width: 500px;
-    margin: 2rem auto;
-    padding: 1rem 1.25rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(0,0,0,0.25);
-    backdrop-filter: blur(10px);
-  }
-  #snake-app h2 {
-    text-align: center;
-    margin-bottom: 0.75rem;
-    font-size: 1.4rem;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-    padding-bottom: 0.4rem;
-  }
-  .snake-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.8rem;
-    font-size: 0.85rem;
-  }
-  .snake-controls button {
-    font-size: 0.85rem;
-    padding: 0.35rem 0.9rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    color: white;
-    font-weight: 500;
-    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
-  }
-  #snake-start { background: #3b82f6; }
-  #snake-start:hover { background: #2563eb; transform: translateY(-1px); box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4); }
-  #snake-pause { background: #f59e0b; }
-  #snake-pause:hover { background: #d97706; transform: translateY(-1px); box-shadow: 0 2px 6px rgba(217, 119, 6, 0.4); }
-  #snake-reset { background: #ef4444; }
-  #snake-reset:hover { background: #dc2626; transform: translateY(-1px); box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4); }
-  .snake-score {
-    margin-left: 0.5rem;
-    font-size: 0.85rem;
-  }
-  #snake-canvas-wrapper {
-    display: flex;
-    justify-content: center;
-  }
-  #snake-canvas {
-    border-radius: 6px;
-    border: 2px solid #f5f5f5;
-    background: radial-gradient(circle at top, #111 0, #000 50%, #050505 100%);
-  }
-  .snake-status {
-    margin-top: 0.6rem;
-    min-height: 1.1rem;
-    font-size: 0.85rem;
-    text-align: center;
-  }
-  .snake-status.ok { color: #6ee7b7; }
-  .snake-status.bad { color: #fca5a5; }
-
-  .snake-mobile-controls {
-    margin-top: 0.8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-  }
-  .snake-mobile-middle {
-    display: flex;
-    gap: 0.3rem;
-  }
-  .snake-mobile-controls button {
-    width: 2.2rem;
-    height: 2.2rem;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.3);
-    background: rgba(0,0,0,0.5);
-    color: #f5f5f5;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  .snake-mobile-controls button:active {
-    background: rgba(255,255,255,0.12);
-  }
-  @media (min-width: 768px) {
-    .snake-mobile-controls { display: none; }
-  }
-</style>
-</div>
+<script src="{{ '/assets/js/minigames-toggle.js' | relative_url }}"></script>
 
 
 
-<!-- ============================= -->
-<!-- MONTE CARLO TRADER HTML+CSS  -->
-<!-- ============================= -->
-<div id="mc-trader-section" class="game-section hidden">
-  <div id="mc-trader-app">
-    <h2>Monte Carlo Trader</h2>
-
-    <div class="mc-top-row">
-      <div class="mc-stat">
-        <span class="mc-label">Step</span>
-        <span id="mc-step" class="mc-value">0 / 20</span>
-      </div>
-      <div class="mc-stat">
-        <span class="mc-label">Price</span>
-        <span id="mc-price" class="mc-value">$100.00</span>
-      </div>
-      <div class="mc-stat">
-        <span class="mc-label">Position</span>
-        <span id="mc-position" class="mc-value">0</span>
-      </div>
-      <div class="mc-stat">
-        <span class="mc-label">Cash</span>
-        <span id="mc-cash" class="mc-value">$0.00</span>
-      </div>
-      <div class="mc-stat">
-        <span class="mc-label">Equity</span>
-        <span id="mc-equity" class="mc-value">$0.00</span>
-      </div>
-    </div>
-
-    <div class="mc-controls">
-      <button id="mc-buy">Buy 1</button>
-      <button id="mc-sell">Short 1</button>
-      <button id="mc-hold">Hold</button>
-      <button id="mc-reset">Reset</button>
-    </div>
-
-    <div id="mc-status" class="mc-status">
-      Trade the geometric Brownian motion.
-    </div>
-
-    <div id="mc-chart-wrapper">
-      <canvas id="mc-chart" width="600" height="200"></canvas>
-    </div>
-
-    <div class="mc-note">
-      GBM model with jumps. Try to end with positive equity.
-    </div>
-  </div>
-
-  <style>
-    #mc-trader-app {
-      max-width: 650px;
-      margin: 2rem auto;
-      padding: 1rem 1.25rem 1.25rem;
-      border-radius: 0.75rem;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(0,0,0,0.25);
-      backdrop-filter: blur(10px);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    #mc-trader-app h2 {
-      text-align: center;
-      margin: 0 0 0.75rem;
-      font-size: 1.4rem;
-      letter-spacing: 0.08em;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
-      padding-bottom: 0.4rem;
-    }
-
-    .mc-top-row {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 0.6rem;
-      margin-bottom: 0.9rem;
-      font-size: 0.85rem;
-    }
-
-    .mc-stat {
-      padding: 0.45rem 0.6rem;
-      border-radius: 0.5rem;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.12);
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      min-width: 0;
-    }
-
-    .mc-label {
-      opacity: 0.8;
-      font-size: 0.75rem;
-    }
-
-    .mc-value {
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-      font-size: 0.95rem;
-    }
-
-    .mc-controls {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .mc-controls button {
-      font-size: 0.85rem;
-      padding: 0.4rem 1.1rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      color: white;
-      font-weight: 500;
-      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    #mc-buy { background: #22c55e; }
-    #mc-buy:hover {
-      background: #16a34a;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.4);
-    }
-
-    #mc-sell { background: #ef4444; }
-    #mc-sell:hover {
-      background: #dc2626;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4);
-    }
-
-    #mc-hold { background: #6b7280; }
-    #mc-hold:hover {
-      background: #4b5563;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 6px rgba(75, 85, 99, 0.4);
-    }
-
-    #mc-reset { background: #3b82f6; }
-    #mc-reset:hover {
-      background: #2563eb;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4);
-    }
-
-    .mc-status {
-      min-height: 1.3rem;
-      font-size: 0.86rem;
-      text-align: center;
-      margin-bottom: 0.4rem;
-    }
-
-    .mc-status.ok { color: #168759ff; }
-    .mc-status.bad { color: #e91313ff; }
-
-    #mc-chart-wrapper {
-      margin: 0.4rem auto 0.8rem;
-      max-width: 100%;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-    }
-
-    #mc-chart {
-      max-width: 100%;
-      border-radius: 0.5rem;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: radial-gradient(circle at top, #020617, #000000);
-    }
-
-    .mc-note {
-      font-size: 0.74rem;
-      opacity: 0.85;
-      text-align: center;
-    }
-
-    @media (max-width: 640px) {
-      .mc-top-row {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-  </style>
-</div>
 
 
-<!-- ============================= -->
-<!-- Load external JS for games   -->
-<!-- ============================= -->
 
-<script src="{{ '/assets/js/minigames.js' | relative_url }}"></script>
