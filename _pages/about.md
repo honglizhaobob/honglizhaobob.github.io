@@ -157,7 +157,7 @@ at the University of Chicago. I received my B.A. from UC Berkeley in
 
   <div class="course-card card-amber">
     <div class="course-name">CAAM 31020: Nonlinear Optimization</div>
-    <div class="course-sem">Wi24</div>
+    <div class="course-sem">Wi24, Wi26</div>
   </div>
 
   <div class="course-card card-violet">
